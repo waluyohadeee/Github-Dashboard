@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Pelajar</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Dashboard Pelajar</h1>
+  </header>
+
+  <main>
+    <!-- Bagian ringkasan -->
+    <section class="summary">
+      <!-- Kartu Keuangan -->
+      <div class="card">
+        <h3>Total Pengeluaran</h3>
+        <p id="total-keuangan">Rp 0</p>
+        <a href="keuangan.html" class="btn">Kelola Keuangan</a>
+      </div>
+
+      <!-- Kartu Jadwal (Tambahan Baru) -->
+      <div class="card">
+        <h3>Jadwal Kegiatan</h3>
+        <p id="jumlah-jadwal">0 kegiatan</p>
+        <a href="jadwal.html" class="btn">Kelola Jadwal</a>
+      </div>
+    </section>
+
+    <!-- Chatbot -->
+    <section class="chatbot">
+      <h3>Asisten AI</h3>
+      <div id="chat-box"></div>
+      <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Ketik di sini..." />
+        <button id="send-btn">Kirim</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

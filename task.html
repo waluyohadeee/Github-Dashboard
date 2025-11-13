@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard Pelajar — Tanggungan Tugas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="container" id="app">
+
+<header>
+  <div>
+    <h1>Dashboard Pelajar</h1>
+    <div class="sub">Tanggungan Tugas • Chatbot hanya di dashboard utama</div>
+  </div>
+  <div class="sub" id="dev-status">Status: Ready</div>
+</header>
+
+<div class="grid">
+
+  <!-- SIDEBAR KIRI -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">SP</div>
+      <div><div class="logo-title">Student Panel</div><div class="muted">Navigasi</div></div>
+    </div>
+
+    <div class="menu">
+      <button>Dashboard</button>
+      <button>Jadwal</button>
+      <button class="active">Tanggungan Tugas</button>
+      <button>Manajemen Keuangan</button>
+      <button>Produktivitas</button>
+    </div>
+  </aside>
+
+  <!-- MAIN TASK AREA -->
+  <main class="tasks-panel">
+
+    <div class="panel-header">
+      <div>
+        <div class="section-title">Tanggungan Tugas</div>
+        <div class="muted">Tambah, edit, atur prioritas, tandai selesai, sortir, filter.</div>
+      </div>
+      <div class="muted" id="task-summary">0 tugas</div>
+    </div>
+
+    <!-- FORM TAMBAH TUGAS -->
+    <div class="add-form">
+      <div class="form-row">
+        <input id="task-title" class="input" style="flex:1" placeholder="Judul tugas" />
+        <select id="task-type" class="input small">
+          <option value="study">Study</option>
+          <option value="assignment">Assignment</option>
+          <option value="project">Project</option>
+          <option value="personal">Personal</option>
+        </select>
+        <label class="checkbox-label"><input id="task-important" type="checkbox" /> Penting</label>
+      </div>
+      <div class="form-row">
+        <input id="task-start" type="date" class="input small" />
+        <input id="task-due" type="date" class="input small" />
+        <select id="task-priority" class="input small">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+        <button id="btn-add-task" class="btn primary">Tambah</button>
+      </div>
+    </div>
+
+    <!-- FILTER & SORT -->
+    <div class="controls">
+      <input id="filter-text" class="input small" placeholder="Cari..." />
+      <select id="filter-type" class="input small">
+        <option value="">Semua tipe</option>
+        <option value="study">Study</option>
+        <option value="assignment">Assignment</option>
+        <option value="project">Project</option>
+        <option value="personal">Personal</option>
+      </select>
+      <label class="checkbox-label"><input id="filter-important" type="checkbox" /> Penting saja</label>
+
+      <select id="sort-by" class="input small">
+        <option value="due_asc">Deadline ↑</option>
+        <option value="due_desc">Deadline ↓</option>
+        <option value="start_asc">Mulai ↑</option>
+        <option value="start_desc">Mulai ↓</option>
+        <option value="priority_desc">Prioritas</option>
+        <option value="type_asc">Tipe A→Z</option>
+      </select>
+
+      <button id="btn-clear-filters" class="btn ghost">Reset</button>
+    </div>
+
+    <!-- LIST -->
+    <div id="tasks-list" class="tasks-list"></div>
+    <div id="empty-hint" class="muted empty">Belum ada tugas.</div>
+
+  </main>
+
+  
+
+</div>
+</div>
+
+<script src="js/task.js" defer></script>
+</body>
+</html>

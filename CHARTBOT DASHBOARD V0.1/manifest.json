@@ -1,8 +1,0 @@
-{
-"name": "Offline Web App Starter",
-"short_name": "OfflineApp",
-"start_url": ".",
-"display": "standalone",
-"background_color": "#ffffff",
-"description": "Starter offline app with tasks, calendar, chat, chart, quotes"
-}

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard Pelajar</title>
+
+  <!-- CSS terpisah -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="container" id="app">
+    <header>
+      <div>
+        <h1>Dashboard Pelajar</h1>
+      </div>
+      <div class="sub">Status: <strong id="status">Ready</strong></div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT -->
+      <aside class="sidebar">
+        <div class="logo">
+          <div class="logo-box">SP</div>
+          <div>
+            <div class="logo-title">Student Panel</div>
+            <div class="muted small">Dashboard • Prototype</div>
+          </div>
+        </div>
+
+        <div class="menu" role="tablist">
+          <button data-view="dashboard" class="active">Dashboard</button>
+          <button data-view="jadwal" class="active">Jadwal</button>
+          <button data-view="tasks" class="active">Tanggungan Tugas</button>
+          <button data-view="finance" class="active" >Manajemen Keuangan</button>
+          <button data-view="productivity" class="active" >Produktivitas</button>
+        </div>
+
+        <div class="moodboard">
+          <div class="mb-title">Moodboard — Sky & Sand</div>
+          <div class="swatches">
+            <div class="swatch" style="background:var(--sky)">Sky<br><span>#BEE7FF</span></div>
+            <div class="swatch" style="background:var(--cream)">Cream<br><span>#FFF4E6</span></div>
+            <div class="swatch" style="background:var(--sand)">Sand<br><span>#F6E6D8</span></div>
+            <div class="swatch" style="background:var(--peach)">Peach<br><span>#FFD7D0</span></div>
+          </div>
+          
+        </div>
+      </aside>
+
+      <!-- CENTER -->
+      <main class="main">
+        <section class="cards">
+          <div class="card">
+            <div class="title">Jadwal Hari Ini</div>
+            <div class="value" id="summary-schedule">0 kegiatan</div>
+          </div>
+          <div class="card">
+            <div class="title">Tanggungan Tugas</div>
+            <div class="value" id="summary-tasks">0 tugas</div>
+          </div>
+          <div class="card">
+            <div class="title">Saldo</div>
+            <div class="value" id="summary-balance">Rp0</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div class="ph-title">Ringkasan Produktivitas</div>
+            <div class="muted small">Skor dihitung dari tugas selesai & check-in</div>
+          </div>
+          <div class="productivity-row">
+            <div class="productivity-val" id="summary-productivity">0%</div>
+            <div class="muted small">Skor harian.</div>
+          </div>
+        </section>
+
+        <section class="two-col">
+          <div class="panel">
+            <div class="panel-head">
+              <div class="ph-title">Manajemen Keuangan — Terbaru</div>
+              <button class="btn ghost" id="btn-add-expense">Tambah Pengeluaran</button>
+            </div>
+
+            <div class="list" id="finance-list"></div>
+            <div class="muted small" style="margin-top:8px">Kamu bisa menambahkan via chat juga.</div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div class="ph-title">Tugas Mendatang</div>
+              <div class="muted small" id="task-count">0</div>
+            </div>
+            <div class="list" id="tasks-list"></div>
+
+            <div class="task-add">
+              <input id="new-task-input" type="text" placeholder="Contoh: Kerjakan PR matematika" />
+              <div class="task-add-btns">
+                <button class="btn primary" id="btn-add-task">Tambahkan Tugas</button>
+                <button class="btn ghost" id="btn-complete-sim">Tandai Satu Selesai (demo)</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- RIGHT -->
+      <aside class="rightcol">
+        <div class="chat">
+          <div class="panel-head">
+            <div class="ph-title">AI Assistant</div>    
+          </div>
+
+          <div class="messages" id="chat-messages"></div>
+
+          <div class="input-row">
+            <input id="chat-input" type="text" placeholder='Contoh: "saya membeli kuota 50rb"' />
+            <button class="send" id="chat-send">Kirim</button>
+          </div>
+
+        
+        </div>
+
+        
+      </aside>
+    </div>
+  </div>
+
+  <!-- JS terpisah -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
