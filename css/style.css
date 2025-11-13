@@ -121,7 +121,8 @@ header .sub {
   font-size: 14px;
 }
 
-.menu button.active {
+.menu button.active,
+.menu button:hover {
   background: linear-gradient(90deg, var(--sky), var(--cream));
   box-shadow: 0 6px 16px rgba(11,65,102,0.06);
 }
