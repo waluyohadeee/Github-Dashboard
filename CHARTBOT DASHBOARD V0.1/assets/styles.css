@@ -1,0 +1,25 @@
+:root{
+  --bg:#f7f7fb;
+  --card:#ffffff;
+  --accent:#6c7ae0;
+  --text:#222;
+  --muted:#666;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  padding:20px;
+}
+header h1{font-size:20px;margin:0 0 16px}
+main{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+section{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,0.06)}
+.card{padding:12px;border-radius:8px;background:#fff}
+.chat-log{height:160px;overflow:auto;border:1px solid #eee;padding:8px;border-radius:6px;margin-bottom:8px}
+.chat-log .user{color:var(--accent);margin:6px 0}
+.chat-log .bot{color:var(--muted);margin:4px 0}
+#task-list{list-style:none;padding:0;margin:8px 0}
+#task-list li{padding:8px;border-bottom:1px solid #f1f1f1}
+button{background:var(--accent);color:#fff;padding:8px 10px;border:none;border-radius:6px;cursor:pointer}
+input{padding:8px;border-radius:6px;border:1px solid #e8e8f0}
