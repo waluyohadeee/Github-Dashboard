@@ -407,20 +407,29 @@ import { getMonthDays, formatToYYYYMMDD, isSameDay } from './calendar.js';
     console.error("Error binding events:", e);
   }
 
+ // ... (sebelum baris '})();')
+
   // Logika Navigasi Sidebar (PENTING)
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.menu button[data-view]').forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        const view = button.getAttribute('data-view');
-        
-        if (view === 'tasks') {
-          window.location.href = 'task.html';
-        } else if (view === 'dashboard') {
-          window.location.href = 'index.html';
-        }
-        // Tambahkan else if untuk 'finance' dan 'productivity' jika halaman itu ada
-      });
+  // GANTI listener 'DOMContentLoaded' yang lama dengan ini:
+  document.querySelectorAll('.menu button[data-view]').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const view = button.getAttribute('data-view');
+      
+      if (view === 'tasks') {
+        window.location.href = 'task.html';
+      } else if (view === 'dashboard') {
+        window.location.href = 'index.html';
+         // Sudah di halaman ini
+      } else if (view === 'finance') {
+        window.location.href = 'keuangan.html';
+      } else if (view === 'jadwal') {
+   // Sudah di halaman ini
+} else if (view === 'finance') {
+  window.location.href = 'keuangan.html';
+} else if (view === 'productivity') { // TAMBAHKAN INI
+  window.location.href = 'produktivitas.html';
+}
     });
   });
 
@@ -430,3 +439,7 @@ import { getMonthDays, formatToYYYYMMDD, isSameDay } from './calendar.js';
   renderAgendaForDay(state.selectedDate); // Tampilkan agenda hari ini saat load
 
 })();
+  // init
+  loadAllData();
+  renderCalendar();
+  renderAgendaForDay(state.selectedDate); // Tampilkan agenda hari ini saat load

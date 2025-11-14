@@ -38,16 +38,40 @@
     if(ty) list = list.filter(t=>t.type===ty);
     if(im) list = list.filter(t=>t.important);
 
-    switch((r.sortBy && r.sortBy.value) || "due_asc"){
-      case "due_asc":   list.sort((a,b)=>(a.due||"").localeCompare(b.due||"")); break;
-      case "due_desc":  list.sort((a,b)=>(b.due||"").localeCompare(a.due||"")); break;
-      case "start_asc": list.sort((a,b)=>(a.start||"").localeCompare(b.start||"")); break;
-      case "start_desc":list.sort((a,b)=>(b.start||"").localeCompare(a.start||"")); break;
-      case "priority_desc":
-        const pr = v => v==="high"?3:v==="medium"?2:1;
-        list.sort((a,b)=>pr(b.priority)-pr(a.priority)); break;
-      case "type_asc": list.sort((a,b)=>(a.type||"").localeCompare(b.type||"")); break;
+    // === REVISI UTAMA: Logika Sorting ===
+    const sortByValue = (r.sortBy && r.sortBy.value) || "priority_first"; // Default baru: prioritas
+    
+    // Default sorting (priority_first) dan due_asc akan menggunakan logika prioritas
+    if (sortByValue === "priority_first" || sortByValue === "due_asc") {
+        list.sort((a, b) => {
+            // 1. Prioritaskan 'important'
+            if (a.important !== b.important) return a.important ? -1 : 1;
+            // 2. Prioritaskan 'high'
+            const isAHigh = a.priority === 'high';
+            const isBHigh = b.priority === 'high';
+            if (isAHigh !== isBHigh) return isAHigh ? -1 : 1;
+            // 3. Prioritaskan 'medium'
+            const isAMedium = a.priority === 'medium';
+            const isBMedium = b.priority === 'medium';
+            if (isAMedium !== isBMedium) return isAMedium ? -1 : 1;
+            // 4. Sortir by 'due'
+            const dueA = a.due || '9999-12-31';
+            const dueB = b.due || '9999-12-31';
+            return dueA.localeCompare(dueB);
+        });
+    } else {
+        // Switch untuk opsi sorting lainnya
+        switch(sortByValue){
+          case "due_desc":  list.sort((a,b)=>(b.due||"9999-12-31").localeCompare(a.due||"9999-12-31")); break;
+          case "start_asc": list.sort((a,b)=>(a.start||"9999-12-31").localeCompare(b.start||"9999-12-31")); break;
+          case "start_desc":list.sort((a,b)=>(b.start||"9999-12-31").localeCompare(a.start||"9999-12-31")); break;
+          case "priority_desc":
+            const pr = v => v==="high"?3:v==="medium"?2:v==="low"?1:0;
+            list.sort((a,b)=>pr(b.priority)-pr(a.priority)); break;
+          case "type_asc": list.sort((a,b)=>(a.type||"").localeCompare(b.type||"")); break;
+        }
     }
+    // === AKHIR REVISI SORTING ===
 
     if(!r.list) return;
     r.list.innerHTML = "";
@@ -60,6 +84,13 @@
     list.forEach(t=>{
       const card = document.createElement("div");
       card.className = "task-card";
+      // REVISI: Tambahkan border jika penting
+      if (t.important) {
+        card.style.borderLeft = "4px solid #b91c1c";
+      } else if (t.priority === 'high') {
+        card.style.borderLeft = "4px solid #b45309";
+      }
+
 
       const left = document.createElement("div");
       left.style.display = "flex"; left.style.gap = "12px"; left.style.flex = "1";
@@ -73,11 +104,12 @@
       const title = document.createElement("div");
       title.className = "task-title";
       title.textContent = t.title;
-      if(t.important){
-        const star = document.createElement("span");
-        star.className = "important"; star.textContent = "★";
-        title.appendChild(star);
-      }
+      // REVISI: Pindahkan 'Penting' ke label visual
+      // if(t.important){
+      //   const star = document.createElement("span");
+      //   star.className = "important"; star.textContent = "★";
+      //   title.appendChild(star);
+      // }
 
       const dates = document.createElement("div");
       dates.className = "task-dates";
@@ -92,11 +124,35 @@
       const right = document.createElement("div");
       right.style.display = "flex";
       right.style.flexDirection = "column";
+      right.style.alignItems = "flex-end"; // REVISI: Ratakan ke kanan
       right.style.gap = "6px";
 
+      // === REVISI: Buat kontainer untuk tag dan label prioritas ===
+      const tagContainer = document.createElement("div");
+      tagContainer.style.display = "flex";
+      tagContainer.style.gap = "6px";
+      tagContainer.style.alignItems = "center";
+      
       const tag = document.createElement("div");
       tag.className = "tag";
       tag.textContent = `${t.type} • ${t.priority}`;
+      tagContainer.appendChild(tag); // Masukkan tag lama
+
+      // Masukkan label prioritas baru
+      if (t.important) {
+          const label = document.createElement("span");
+          label.className = "task-label important";
+          label.textContent = "Penting";
+          tagContainer.appendChild(label);
+      } else if (t.priority === 'high') {
+          const label = document.createElement("span");
+          label.className = "task-label urgent";
+          label.textContent = "Urgent";
+          tagContainer.appendChild(label);
+      }
+      
+      right.appendChild(tagContainer); // Tambahkan kontainer tag ke sisi kanan
+      // === AKHIR REVISI TAG ===
 
       const btns = document.createElement("div");
       btns.className = "controls-inline";
@@ -113,16 +169,15 @@
 
       btns.appendChild(ebtn);
       btns.appendChild(dbtn);
-
-      right.appendChild(tag);
-      right.appendChild(btns);
+      
+      right.appendChild(btns); // Tambahkan tombol di bawah tag
 
       card.appendChild(left);
       card.appendChild(right);
       r.list.appendChild(card);
     });
 
-    if(r.summary) r.summary.textContent = `${state.tasks.length} tugas`;
+    if(r.summary) r.summary.textContent = `${state.tasks.length} total tugas`;
   }
 
   function addTask(){
@@ -159,10 +214,18 @@
 
     const newDue = prompt("Deadline (YYYY-MM-DD):", t.due || "");
     if(newDue === null) return;
+    
+    // REVISI: Izinkan edit prioritas dan status penting
+    const newPriority = prompt("Prioritas (low, medium, high):", t.priority || "medium");
+    if(newPriority === null) return;
+    
+    const newImportant = confirm("Tandai sebagai 'Penting'?");
 
     t.title = newTitle.trim();
     t.start = newStart.trim() || null;
     t.due = newDue.trim() || null;
+    t.priority = newPriority.trim().toLowerCase() || "medium";
+    t.important = newImportant;
 
     save(); render();
   }
@@ -176,7 +239,7 @@
     state.tasks = [
       {id: uid(), title: "Kerjakan PR Matematika", type: "assignment", important: true, start: "2025-11-14", due: "2025-11-16", priority: "high", status: "pending"},
       {id: uid(), title: "Baca bab 3 Biologi", type: "study", important: false, start: "2025-11-13", due: "2025-11-15", priority: "medium", status: "pending"},
-      {id: uid(), title: "Persiapan presentasi project", type: "project", important: true, start: "2025-11-20", due: "2025-11-25", priority: "high", status: "pending"}
+      {id: uid(), title: "Persiapan presentasi project", type: "project", important: false, start: "2025-11-20", due: "2025-11-25", priority: "high", status: "pending"}
     ];
     save();
   }
@@ -184,7 +247,6 @@
   // ----------------------
   // Event bindings (CRITICAL)
   // ----------------------
-  // Make sure to bind only if elements exist (keeps compatibility)
   try {
     if(r.add) r.add.addEventListener('click', addTask);
     if(r.filterText) r.filterText.addEventListener('input', render);
@@ -195,7 +257,7 @@
       if(r.filterText) r.filterText.value = "";
       if(r.filterType) r.filterType.value = "";
       if(r.filterImportant) r.filterImportant.checked = false;
-      if(r.sortBy) r.sortBy.value = "due_asc";
+      if(r.sortBy) r.sortBy.value = "priority_first"; // REVISI: Reset ke default baru
       render();
     });
     if(r.resetDemo) r.resetDemo.addEventListener('click', function(){
@@ -207,13 +269,56 @@
   } catch (e) {
     console.error("Error binding events:", e);
   }
+  
+  // REVISI: Navigasi JS
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.menu button[data-view]').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const view = button.getAttribute('data-view');
+        if (view === 'dashboard') {
+          window.location.href = 'index.html';
+        } else if (view === 'jadwal') {
+          window.location.href = 'jadwal.html';
+        } 
+        // Tidak perlu 'tasks' karena sudah di halaman ini
+      });
+    });
+  });
 
   // init
   load();
   if(state.tasks.length === 0) seed();
+  
+  // REVISI: Set default sort di dropdown saat load
+  if(r.sortBy && !r.sortBy.value) {
+    r.sortBy.value = "priority_first";
+  }
+
   render();
 
   // expose if needed
   window.__tasks = { state, save, load };
+// ... (sebelum baris '})();')
+
+  // Logika Navigasi Sidebar (PENTING)
+  document.querySelectorAll('.menu button[data-view]').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const view = button.getAttribute('data-view');
+      
+      if (view === 'tasks') {
+        // Sudah di halaman ini
+      } else if (view === 'dashboard') {
+        window.location.href = 'index.html';
+      } else if (view === 'jadwal') {
+        window.location.href = 'jadwal.html';
+      } else if (view === 'finance') {
+        window.location.href = 'keuangan.html';
+      } else if (view === 'productivity') { // TAMBAHKAN INI
+  window.location.href = 'produktivitas.html';
+}
+    });
+  });
 
 })();

@@ -1,45 +1,177 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Pelajar</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Student Panel — Jadwal</title>
+  
   <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
-  <header>
-    <h1>Dashboard Pelajar</h1>
-  </header>
 
-  <main>
-    <!-- Bagian ringkasan -->
-    <section class="summary">
-      <!-- Kartu Keuangan -->
-      <div class="card">
-        <h3>Total Pengeluaran</h3>
-        <p id="total-keuangan">Rp 0</p>
-        <a href="keuangan.html" class="btn">Kelola Keuangan</a>
+  <div class="web3-bg">
+      <div class="grid-lines"></div>
+      <div class="floating-shapes">
+          <div class="shape shape-1"></div>
+          <div class="shape shape-2"></div>
       </div>
+  </div>
+  <div class="particles-container"></div>
 
-      <!-- Kartu Jadwal (Tambahan Baru) -->
-      <div class="card">
-        <h3>Jadwal Kegiatan</h3>
-        <p id="jumlah-jadwal">0 kegiatan</p>
-        <a href="jadwal.html" class="btn">Kelola Jadwal</a>
+  <nav class="navbar">
+      <div class="nav-container">
+          <div class="nav-logo">
+              <div class="logo-glow">
+                  <i class="fas fa-graduation-cap"></i>
+              </div>
+              <span class="logo-text">Student<span class="logo-accent">PANEL</span></span>
+          </div>
+          
+          <div class="nav-actions">
+              <button class="btn primary" onclick="window.location.href='index.html'">
+                  <i class="fas fa-home"></i>
+                  Dashboard
+              </button>
+          </div>
       </div>
-    </section>
+  </nav>
 
-    <!-- Chatbot -->
-    <section class="chatbot">
-      <h3>Asisten AI</h3>
-      <div id="chat-box"></div>
-      <div class="chat-input">
-        <input type="text" id="user-input" placeholder="Ketik di sini..." />
-        <button id="send-btn">Kirim</button>
+<div class="container" id="app">
+
+<div class="grid" style="grid-template-columns: 260px 1fr;"> <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-box">SP</div>
+      <div><div class="logo-title">Student Panel</div><div class="muted small">Navigasi</div></div>
+    </div>
+
+    <div class="menu">
+      <button data-view="dashboard">Dashboard</button>
+      <button data-view="jadwal" class="active">Jadwal</button>
+      <button data-view="tasks">Tanggungan Tugas</button>
+      <button data-view="finance">Manajemen Keuangan</button>
+      <button data-view="productivity">Produktivitas</button>
+    </div>
+  </aside>
+
+  <main class="jadwal-panel" style="display: grid; grid-template-columns: 2fr 1fr; gap: 18px;">
+
+    <div id="calendar-container">
+      <div id="calendar-header" class="panel-head">
+        <button id="btn-prev-month" class="btn ghost"><i class="fas fa-arrow-left"></i></button>
+        <h2 id="calendar-month-year">November 2025</h2>
+        <button id="btn-next-month" class="btn ghost"><i class="fas fa-arrow-right"></i></button>
       </div>
-    </section>
+      <div id="calendar-grid-header">
+        <div class="calendar-day-header">Min</div>
+        <div class="calendar-day-header">Sen</div>
+        <div class="calendar-day-header">Sel</div>
+        <div class="calendar-day-header">Rab</div>
+        <div class="calendar-day-header">Kam</div>
+        <div class="calendar-day-header">Jum</div>
+        <div class="calendar-day-header">Sab</div>
+      </div>
+      <div id="calendar-grid-body">
+        </div>
+    </div>
+
+    <div id="agenda-container">
+      <div class="panel-head">
+        <h3 id="agenda-title">Agenda Hari Ini</h3>
+        <button id="btn-show-modal-add" class="btn primary">Tambah</button>
+      </div>
+      <div id="agenda-list" class="list" style="margin-top: 1rem;">
+        </div>
+      <div id="agenda-empty" class="empty">
+        Tidak ada agenda.
+      </div>
+    </div>
+
   </main>
 
-  <script src="js/main.js"></script>
+</div>
+</div>
+
+<div id="gcal-modal-backdrop">
+    <div id="gcal-modal-content">
+        <div class="gcal-header">
+            <button id="gcal-close-btn" class="btn ghost" style="border: none;">&times;</button>
+        </div>
+        <div class="gcal-body">
+            <input id="gcal-title" type="text" placeholder="Tambahkan judul" class="input" style="font-size: 1.2rem; margin-bottom: 1rem;">
+            
+            <div class="gcal-tabs">
+                <button class="gcal-tab active" data-tab="event">Acara</button>
+                <button class="gcal-tab" data-tab="task">Tugas</button>
+                <button class="gcal-tab" data-tab="reminder">Pengingat</button>
+            </div>
+            
+            <div id="gcal-body-event" class="gcal-body-section">
+                <div class="form-row">
+                    <input type="date" id="gcal-event-start-date" class="input small">
+                    <input type="time" id="gcal-event-start-time" class="input small">
+                </div>
+                <div class="form-row">
+                    <input type="date" id="gcal-event-end-date" class="input small">
+                    <input type="time" id="gcal-event-end-time" class="input small">
+                </div>
+            </div>
+            <div id="gcal-body-task" class="gcal-body-section">
+                <div class="gcal-form-group">
+                    <label>Deadline</label>
+                    <input type="date" id="gcal-task-due" class="input">
+                </div>
+                 <div class="gcal-form-group">
+                    <label>Tipe</label>
+                    <select id="gcal-task-type" class="input">
+                        <option value="study">Study</option>
+                        <option value="assignment">Assignment</option>
+                    </select>
+                </div>
+                 <div class="gcal-form-group">
+                    <label>Prioritas</label>
+                    <select id="gcal-task-priority" class="input">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <label class="checkbox-label"><input id="gcal-task-important" type="checkbox" /> Penting</label>
+            </div>
+            <div id="gcal-body-reminder" class="gcal-body-section">
+                <div class="form-row">
+                    <input type="date" id="gcal-reminder-date" class="input small">
+                    <input type="time" id="gcal-reminder-time" class="input small">
+                </div>
+            </div>
+        </div>
+        <div class="gcal-footer">
+            <button id="gcal-save-btn" class="btn primary">Simpan</button>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/animations.js"></script>
+<script src="js/jadwal.js" type="module"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.menu button[data-view]').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const view = button.getAttribute('data-view');
+        
+        if (view === 'dashboard') {
+          window.location.href = 'index.html';
+        } else if (view === 'tasks') {
+          window.location.href = 'task.html';
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard Pelajar — Produktivitas</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container" id="app">
+
+<header>
+  <div>
+    <h1>Dashboard Pelajar</h1>
+    <div class="sub">Pelacak Produktivitas • Chatbot hanya di dashboard utama</div>
+  </div>
+  <div class="sub" id="dev-status">Status: Ready</div>
+</header>
+
+<div class="grid" style="grid-template-columns: 260px 1fr;">
+
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">SP</div>
+      <div><div class="logo-title">Student Panel</div><div class="muted">Navigasi</div></div>
+    </div>
+    <div class="menu">
+      <button data-view="dashboard">Dashboard</button>
+      <button data-view="jadwal">Jadwal</button>
+      <button data-view="tasks">Tanggungan Tugas</button>
+      <button data-view="finance">Manajemen Keuangan</button>
+      <button data-view="productivity" class="active">Produktivitas</button>
+    </div>
+  </aside>
+
+  <main class="productivity-panel">
+
+    <div class="panel-header">
+      <div>
+        <div class="section-title">Pelacak Produktivitas</div>
+        <div class="muted">Catat kegiatan harian dan dapatkan poin.</div>
+      </div>
+    </div>
+
+    <section class="cards" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 16px;">
+      <div class="card">
+        <div class="title">Total Poin Hari Ini</div>
+        <div class="value" id="overview-points-today">0 Poin</div>
+      </div>
+      <div class="card">
+        <div class="title">Aktivitas Selesai (Hari Ini)</div>
+        <div class="value" id="overview-tasks-done">0</div>
+      </div>
+      <div class="card">
+        <div class="title">Aktivitas Pending (Hari Ini)</div>
+        <div class="value" id="overview-tasks-pending">0</div>
+      </div>
+    </section>
+
+    <section class="two-col" style="margin-bottom: 16px;">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="ph-title">Overview Poin (Hari Ini)</div>
+        </div>
+        <div class="chart-container" style="height: 250px;">
+          <canvas id="productivity-chart"></canvas>
+        </div>
+        <div id="chart-empty-hint" class="muted empty" style="display: none; text-align: center; margin-top: 20px;">
+            Selesaikan kegiatan untuk melihat chart.
+        </div>
+      </div>
+      
+      <div class="panel">
+        <div class="panel-head">
+          <div class="ph-title">Buat Aturan Kegiatan Baru</div>
+        </div>
+        <div class="add-form" style="display: flex; flex-direction: column; gap: 12px;">
+          
+          <label class="small muted">Judul Kegiatan</label>
+          <input id="prod-title" class="input" placeholder="Cth: Belajar 30 menit, Sholat, dll." />
+          
+          <label class="small muted">Jenis & Poin</label>
+          <select id="prod-type" class="input">
+            <option value="wajib">Wajib (3 Poin)</option>
+            <option value="sampingan">Sampingan (2 Poin)</option>
+            <option value="tidak wajib">Tidak Wajib (1 Poin)</option>
+          </select>
+          
+          <label class="small muted">Perulangan</label>
+          <select id="prod-repeat" class="input">
+            <option value="none">Tidak ada (hanya hari ini)</option>
+            <option value="daily">Setiap Hari</option>
+            <option value="weekly">Hari Tertentu (Mingguan)</option>
+          </select>
+
+          <div id="prod-repeat-days" class="prod-repeat-days" style="display: none;">
+              <label><input type="checkbox" data-day="1" /> Sen</label>
+              <label><input type="checkbox" data-day="2" /> Sel</label>
+              <label><input type="checkbox" data-day="3" /> Rab</label>
+              <label><input type="checkbox" data-day="4" /> Kam</label>
+              <label><input type="checkbox" data-day="5" /> Jum</label>
+              <label><input type="checkbox" data-day="6" /> Sab</label>
+              <label><input type="checkbox" data-day="0" /> Min</label>
+          </div>
+          
+          <label class="small muted">Batas Waktu Terlambat (Penalti -2 Poin)</label>
+          <input id="prod-late-time" type="time" class="input small" />
+          <div class="muted" style="font-size: 12px; margin-top: -8px;">Kosongkan jika tidak ada batas waktu.</div>
+
+          <button id="btn-add-activity" class="btn primary" style="margin-top: 10px;">Simpan Aturan</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+          <div class="ph-title">Checklist Harian</div>
+          <div class="muted small" id="activity-count">0 Kegiatan</div>
+        </div>
+        
+        <div class="controls" style="margin-top: 12px;">
+            <label class="small muted">Tampilkan Checklist Untuk Tanggal:</label>
+            <input id="filter-date" type="date" class="input" />
+        </div>
+
+        <div id="activity-list" class="tasks-list" style="margin-top: 12px;">
+            </div>
+        <div id="empty-hint" class="muted empty" style="display: none;">
+            Tidak ada kegiatan yang dijadwalkan untuk hari ini.
+        </div>
+    </section>
+
+  </main>
+
+</div>
+</div>
+
+<script type="module" src="js/produktivitas.js" defer></script>
+</body>
+</html>

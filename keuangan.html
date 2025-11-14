@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard Pelajar — Manajemen Keuangan</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container" id="app">
+
+<header>
+  <div>
+    <h1>Dashboard Pelajar</h1>
+    <div class="sub">Manajemen Keuangan • Chatbot hanya di dashboard utama</div>
+  </div>
+  <div class="sub" id="dev-status">Status: Ready</div>
+</header>
+
+<div class="grid" style="grid-template-columns: 260px 1fr;">
+
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">SP</div>
+      <div><div class="logo-title">Student Panel</div><div class="muted">Navigasi</div></div>
+    </div>
+
+    <div class="menu">
+      <button data-view="dashboard">Dashboard</button>
+      <button data-view="jadwal">Jadwal</button>
+      <button data-view="tasks">Tanggungan Tugas</button>
+      <button data-view="finance" class="active">Manajemen Keuangan</button>
+      <button data-view="productivity">Produktivitas</button>
+    </div>
+  </aside>
+
+  <main class="finance-panel">
+
+    <div class="panel-header">
+      <div>
+        <div class="section-title">Manajemen Keuangan</div>
+        <div class="muted">Overview, riwayat, filter, dan chart.</div>
+      </div>
+    </div>
+
+    <section class="cards" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 16px;">
+      <div class="card">
+        <div class="title">Total Pemasukan</div>
+        <div class="value" id="overview-income">Rp0</div>
+      </div>
+      <div class="card">
+        <div class="title">Total Pengeluaran</div>
+        <div class="value" id="overview-expense">Rp0</div>
+      </div>
+      <div class="card">
+        <div class="title">Saldo Saat Ini</div>
+        <div class="value" id="overview-balance">Rp0</div>
+      </div>
+    </section>
+
+    <section class="two-col" style="margin-bottom: 16px;">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="ph-title">Lalu Lintas Keuangan</div>
+        </div>
+        <div class="chart-container" style="height: 250px;">
+          <canvas id="finance-chart"></canvas>
+        </div>
+      </div>
+      
+      <div class="panel">
+        <div class="panel-head">
+          <div class="ph-title">Filter & Kontrol</div>
+        </div>
+        <div class="controls" style="display: flex; flex-direction: column; gap: 12px;">
+          <select id="filter-type" class="input">
+            <option value="all">Semua Transaksi</option>
+            <option value="Pemasukan">Pemasukan Saja</option>
+            <option value="Pengeluaran">Pengeluaran Saja</option>
+          </select>
+          <input id="filter-text" class="input" placeholder="Cari berdasarkan deskripsi...">
+          <button id="btn-clear-storage" class="btn">Hapus Semua Data Keuangan</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+          <div class="ph-title">Riwayat Transaksi</div>
+          <div class="muted small" id="finance-count">0 Transaksi</div>
+        </div>
+        <div id="finance-list-detailed" class="list" style="margin-top: 12px;">
+            </div>
+        <div id="empty-hint" class="muted empty" style="display: none;">Belum ada transaksi.</div>
+    </section>
+
+  </main>
+
+</div>
+</div>
+
+<script type="module" src="js/keuangan.js" defer></script>
+</body>
+</html>

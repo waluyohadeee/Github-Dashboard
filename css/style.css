@@ -1,65 +1,198 @@
 /* =========================
-   Base / Reset
+   STYLE.CSS (REVISI PENUH V3)
+   Perbaikan dari screenshot. CSS diperkuat untuk mengalahkan file lama.
    ========================= */
+
+/* === Root Variables (dari ai-solution) === */
 :root {
-  --sky: #BEE7FF;
-  --cream: #FFF4E6;
-  --sand: #F6E6D8;
-  --peach: #FFD7D0;
-  --muted: #7b7b7b;
-  --card: #ffffff;
+    --primary: #23F7DD;
+    --primary-dark: #1BD4BE;
+    --secondary: #7B61FF;
+    --accent: #FF4D8D;
+    --background: #0A0B14;
+    --surface: #151728;
+    --card-bg: #1E2036;
+    --text-primary: #FFFFFF;
+    --text-secondary: #8B8D9D;
+    --text-muted: #5A5C6E;
+    --border: #2A2C44;
+    --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+    --gradient-accent: linear-gradient(135deg, var(--accent), var(--secondary));
+    --glow: 0 0 20px rgba(35, 247, 221, 0.3);
+    --glow-strong: 0 0 40px rgba(35, 247, 221, 0.5);
 
-  --radius: 16px;
-  --glass: rgba(255,255,255,0.7);
-
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    /* Mengganti variabel lama (jika ada) */
+    --sky: var(--primary);
+    --cream: #FFF4E6; /* Tetap pakai untuk moodboard jika perlu */
+    --sand: #F6E6D8;
+    --peach: var(--accent);
+    --muted: var(--text-muted);
+    --card: var(--card-bg);
+    --radius: 16px;
 }
 
+/* === Base Styles (dari ai-solution) === */
 * {
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative; /* Membantu z-index */
 }
 
 html, body, #app {
   height: 100%;
 }
 
-body {
-  margin: 0;
-  background: linear-gradient(180deg, #F6FBFF 0%, #FFF7F0 100%);
-  color: #1f2937;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 a {
   color: inherit;
+  text-decoration: none;
 }
 
-/* =========================
-   Layout
-   ========================= */
+/* === Latar Belakang Animasi (dari ai-solution) === */
+.web3-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: var(--background);
+}
+
+.grid-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(42, 44, 68, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(42, 44, 68, 0.3) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gradient);
+    opacity: 0.1;
+    filter: blur(40px);
+}
+
+.shape-1 { width: 300px; height: 300px; top: 10%; left: 5%; animation: floatShape 15s ease-in-out infinite; }
+.shape-2 { width: 200px; height: 200px; top: 60%; right: 10%; animation: floatShape 20s ease-in-out infinite reverse; }
+.shape-3 { width: 150px; height: 150px; bottom: 20%; left: 15%; animation: floatShape 25s ease-in-out infinite; }
+.shape-4 { width: 250px; height: 250px; top: 30%; right: 20%; animation: floatShape 18s ease-in-out infinite reverse; }
+
+@keyframes floatShape {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -50px) rotate(120deg); }
+    66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: particleFloat 10s infinite linear;
+}
+
+@keyframes particleFloat {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+}
+
+/* === Navbar (dari ai-solution, menggantikan header) === */
+.navbar {
+    background: rgba(10, 11, 20, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    padding: 1rem 0;
+    margin-bottom: 20px; /* Jarak ke grid */
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo-glow {
+    width: 40px;
+    height: 40px;
+    background: var(--gradient);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--background);
+    font-size: 1.2rem;
+    box-shadow: var(--glow);
+}
+
+.logo-text { font-size: 1.5rem; font-weight: 700; }
+.logo-accent { color: var(--primary); }
+
+.nav-status {
+    color: var(--text-secondary);
+}
+.nav-status strong {
+    color: var(--primary);
+}
+
+/* === Layout (Struktur dari github-dashboard) === */
 .container {
   max-width: 1200px;
-  margin: 28px auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-header h1 {
-  font-size: 20px;
-  margin: 0;
-}
-
-header .sub {
-  color: var(--muted);
-  font-size: 13px;
-}
+/* Header lama disembunyikan, diganti navbar */
+header { display: none; }
 
 .grid {
   display: grid;
@@ -67,14 +200,12 @@ header .sub {
   gap: 18px;
 }
 
-/* =========================
-   Sidebar kiri
-   ========================= */
+/* === Sidebar Kiri (Gaya ai-solution) === */
 .sidebar {
-  background: var(--card);
+  background: var(--surface);
   padding: 16px;
   border-radius: var(--radius);
-  box-shadow: 0 6px 18px rgba(12,22,46,0.06);
+  border: 1px solid var(--border);
   height: calc(100vh - 150px);
   position: sticky;
   top: 20px;
@@ -92,16 +223,17 @@ header .sub {
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--sky), var(--peach));
+  background: var(--gradient);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
+  color: var(--background);
 }
 
-.logo-title {
-  font-weight: 600;
-}
+.logo-title { font-weight: 600; color: var(--text-primary); }
+.muted { color: var(--text-muted); }
+.small { font-size: 13px; }
 
 .menu {
   margin-top: 12px;
@@ -116,57 +248,71 @@ header .sub {
   border: none;
   background: transparent;
   cursor: pointer;
-  color: #111827;
+  color: var(--text-secondary);
   margin-bottom: 6px;
   font-size: 14px;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  transition: all 0.3s ease;
+  position: relative; /* Untuk ::after */
 }
 
-.menu button.active,
 .menu button:hover {
-  background: linear-gradient(90deg, var(--sky), var(--cream));
-  box-shadow: 0 6px 16px rgba(11,65,102,0.06);
+  color: var(--text-primary);
 }
 
-/* Moodboard */
+/* EFEK GARIS BAWAH */
+.menu button::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 10px;
+    right: 10px;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.menu button:hover::after {
+    width: calc(100% - 20px);
+}
+
+.menu button.active {
+  color: var(--text-primary) !important;
+  background: linear-gradient(90deg, rgba(35, 247, 221, 0.1), rgba(123, 97, 255, 0.1)) !important;
+}
+
+.menu button.active::after {
+    width: calc(100% - 20px) !important;
+}
+
+/* Moodboard (Gaya ai-solution) */
 .moodboard {
   margin-top: 18px;
   padding-top: 8px;
-  border-top: 1px dashed #eee;
+  border-top: 1px dashed var(--border);
 }
 
-.mb-title {
-  font-weight: 600;
-}
-
-.swatches {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
+.mb-title { font-weight: 600; color: var(--text-primary); }
+.swatches { display: flex; gap: 10px; margin-top: 10px; }
 
 .swatch {
   width: 52px;
   height: 52px;
   border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 6px;
   font-size: 10px;
-  color: #111827;
+  color: var(--background);
   box-shadow: 0 4px 10px rgba(12,22,46,0.04);
 }
+.swatch span { font-size: 9px; color: rgba(0,0,0,0.6); }
 
-.swatch span {
-  font-size: 9px;
-  color: rgba(0,0,0,0.6);
-}
-
-/* =========================
-   Main (center)
-   ========================= */
+/* === Main (Gaya ai-solution) === */
 .main {
   min-height: calc(100vh - 150px);
 }
@@ -178,30 +324,45 @@ header .sub {
   margin-bottom: 16px;
 }
 
-.card {
-  background: var(--card);
-  padding: 14px;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(12,22,46,0.06);
+/* Menggunakan gaya .eco-card dari ai-solution untuk .card */
+.card, .panel {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+/* EFEK GRADIENT DI ATAS KARTU */
+.card::before, .panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px !important; /* Diperkuat */
+    background: var(--gradient);
+    opacity: 0.8;
+}
+
+.card:hover, .panel:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
 }
 
 .card .title {
   font-size: 13px;
-  color: var(--muted);
+  color: var(--text-secondary);
 }
 
 .card .value {
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 600;
   margin-top: 6px;
-}
-
-.panel {
-  background: var(--card);
-  padding: 14px;
-  border-radius: 14px;
-  margin-bottom: 12px;
-  box-shadow: 0 6px 18px rgba(12,22,46,0.06);
+  color: var(--primary);
 }
 
 .panel-head {
@@ -210,9 +371,7 @@ header .sub {
   align-items: center;
 }
 
-.ph-title {
-  font-weight: 600;
-}
+.ph-title { font-weight: 600; color: var(--text-primary); }
 
 .two-col {
   display: grid;
@@ -230,9 +389,10 @@ header .sub {
 .productivity-val {
   font-size: 36px;
   font-weight: 700;
+  color: var(--primary);
 }
 
-/* Table-like lists */
+/* List (Gaya ai-solution) */
 .list {
   margin-top: 8px;
 }
@@ -245,20 +405,76 @@ header .sub {
   align-items: center;
   font-size: 14px;
   margin-bottom: 8px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+  background: var(--surface);
+  border: 1px solid var(--border);
 }
 
-.muted {
-  color: var(--muted);
+/* === Tombol & Input (Gaya ai-solution) === */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
 }
 
-.small {
-  font-size: 13px;
+.btn.primary {
+    background: var(--gradient) !important; /* Diperkuat */
+    color: var(--background) !important; /* Diperkuat */
+}
+.btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-strong);
 }
 
-/* =========================
-   RIGHT column — Chat
-   ========================= */
+.btn.ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+.btn.ghost:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Input (Gaya ai-solution) */
+input[type="text"],
+input[type="date"],
+select,
+.input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  border-radius: 12px;
+  outline: none;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus,
+.input:focus {
+  border-color: var(--primary);
+}
+
+.task-add {
+  margin-top: 10px;
+}
+.task-add-btns {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+/* === Kolom Kanan - Chat (Gaya ai-solution) === */
 .rightcol {
   position: sticky;
   height: calc(100vh - 150px);
@@ -269,13 +485,13 @@ header .sub {
 }
 
 .chat {
-  background: var(--card);
+  background: var(--surface);
   padding: 12px;
   border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(12,22,46,0.06);
+  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  height: 60%;
+  height: 60%; /* Sesuaikan */
 }
 
 .messages {
@@ -294,14 +510,14 @@ header .sub {
 }
 
 .msg.ai {
-  background: #f3f4f6;
-  color: #111827;
+  background: var(--card-bg);
+  color: var(--text-secondary);
   align-self: flex-start;
 }
 
 .msg.user {
-  background: #111827;
-  color: #fff;
+  background: var(--gradient);
+  color: var(--background);
   align-self: flex-end;
 }
 
@@ -312,61 +528,215 @@ header .sub {
   margin-top: 8px;
 }
 
+/* PERBAIKAN: Input chat di-styling */
 .chat input[type="text"] {
   flex: 1;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid #e6e6e6;
-  outline: none;
+  width: auto; /* override 100% */
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+}
+.chat input[type="text"]:focus {
+  border-color: var(--primary) !important;
 }
 
 .chat button.send {
   padding: 10px 14px;
   border-radius: 12px;
   border: none;
-  background: #111827;
-  color: white;
+  background: var(--gradient) !important; /* Diperkuat */
+  color: var(--background) !important; /* Diperkuat */
   cursor: pointer;
 }
 
-/* Form / Buttons */
-.btn {
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
+/* === Halaman Task & Jadwal (Spesifik) === */
+.tasks-panel {
+    background: var(--surface);
+    padding: 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    min-height: calc(100vh - 150px);
+    overflow: auto;
+}
+.section-title { font-weight: 700; margin-bottom: 8px; color: var(--primary); }
+
+.add-form, .controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+}
+.form-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+.checkbox-label { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); }
+
+.tasks-list { display: flex; flex-direction: column; gap: 8px; }
+.empty { text-align: center; padding: 2rem; color: var(--text-muted); }
+
+.task-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+.task-card:hover {
+    border-color: var(--primary);
 }
 
-.btn.ghost {
-  background: transparent;
-  border: 1px solid #e6e6e6;
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--primary);
+}
+.checkbox.done {
+    background: var(--primary);
+    color: var(--background);
+}
+.task-title { font-weight: 600; color: var(--text-primary); }
+.task-dates { font-size: 13px; color: var(--text-secondary); }
+.important { color: var(--accent); font-weight: 800; margin-left: 6px; }
+.tag {
+    padding: 6px 8px;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--primary);
+}
+.controls-inline { display: flex; gap: 6px; }
+
+
+/* === Kalender di jadwal.html (Gaya ai-solution) === */
+#calendar-container {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+}
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+#calendar-header h2 { color: var(--primary); }
+#calendar-grid-header, #calendar-grid-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+.calendar-day-header {
+    text-align: center;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+.calendar-day {
+    height: 100px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+.calendar-day:not(.other-month):hover {
+    border-color: var(--primary);
+}
+.calendar-day.today {
+    background: rgba(35, 247, 221, 0.1);
+    border-color: var(--primary);
+    color: var(--text-primary);
+}
+.calendar-day.other-month {
+    opacity: 0.3;
+}
+.day-items-list {
+    font-size: 12px;
+    overflow: hidden;
+    max-height: 60px;
+}
+.day-event-item {
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.day-event-item.task { background: rgba(123, 97, 255, 0.2); color: var(--secondary); }
+.day-event-item.event { background: rgba(255, 77, 141, 0.2); color: var(--accent); }
+.day-event-item.reminder { background: rgba(35, 247, 221, 0.2); color: var(--primary); }
+
+/* Agenda (Gaya ai-solution) */
+#agenda-container {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+}
+#agenda-title { color: var(--primary); }
+#agenda-empty { color: var(--text-muted); padding: 1rem 0; }
+
+/* Modal (Gaya ai-solution) */
+#gcal-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 11, 20, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: none; /* diubah oleh JS */
+    align-items: center;
+    justify-content: center;
+}
+#gcal-modal-content {
+    background: var(--card-bg);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    width: 90%;
+    max-width: 500px;
+    overflow: hidden;
+}
+.gcal-header { display: flex; justify-content: flex-end; padding: 1rem; }
+.gcal-tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 1.5rem; }
+.gcal-tab {
+    padding: 1rem 1.5rem;
+    border: none;
+    background: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+.gcal-tab.active {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+}
+.gcal-body { padding: 1.5rem; }
+.gcal-body-section { display: none; } /* diubah oleh JS */
+.gcal-form-group { margin-bottom: 1rem; }
+.gcal-footer {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-top: 1px solid var(--border);
 }
 
-.btn.primary {
-  background: #111827;
-  color: #fff;
-}
 
-.task-add {
-  margin-top: 10px;
-}
-
-.task-add input {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #eee;
-  width: 100%;
-}
-
-.task-add-btns {
-  margin-top: 8px;
-  display: flex;
-  gap: 8px;
-}
-
-/* =========================
-   Responsive
-   ========================= */
+/* === Responsive (dari github-dashboard) === */
 @media (max-width: 980px) {
   .grid {
     grid-template-columns: 1fr;
@@ -385,60 +755,4 @@ header .sub {
   .main {
     order: 2;
   }
-
-
-  /*CSS KEUANGAN */
-
-}
-:root{
-  --sky:#BEE7FF; --cream:#FFF4E6; --sand:#F6E6D8; --peach:#FFD7D0;
-  --muted:#7b7b7b; --card:#ffffff; --radius:14px; --accent:#111827;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-}
-*{box-sizing:border-box}
-html,body,#app{height:100%}
-body{margin:0;background:linear-gradient(180deg,#F6FBFF 0%,#FFF7F0 100%);color:#1f2937;-webkit-font-smoothing:antialiased}
-.container{max-width:1200px;margin:28px auto;padding:20px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-header h1{font-size:20px;margin:0}
-header .sub{color:var(--muted);font-size:13px}
-
-.grid{display:grid;grid-template-columns:260px 1fr;gap:18px}
-
-/* SIDEBAR */
-.sidebar{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(12,22,46,0.06);height:calc(100vh - 150px);position:sticky;top:20px;overflow:auto}
-.logo{display:flex;gap:10px;align-items:center;margin-bottom:12px}
-.logo-mark{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--sky),var(--peach));display:flex;align-items:center;justify-content:center;font-weight:700}
-.logo-title{font-weight:600}
-.menu button{width:100%;padding:10px;border-radius:10px;border:none;background:transparent;text-align:left;margin-bottom:6px;cursor:pointer}
-.menu button.active{background:linear-gradient(90deg,var(--sky),var(--cream));}
-
-/* MAIN TASK PANEL */
-.tasks-panel{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(12,22,46,0.06);min-height:calc(100vh - 150px);overflow:auto}
-.section-title{font-weight:700;margin-bottom:8px}
-.input, select{padding:10px;border-radius:10px;border:1px solid #eee}
-.input.small{padding:8px}
-.btn{padding:10px 12px;border-radius:10px;border:none;cursor:pointer}
-.btn.primary{background:var(--accent);color:white}
-.btn.ghost{background:transparent;border:1px solid #eee}
-.form-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-
-/* TASK CARD */
-.tasks-list{display:flex;flex-direction:column;gap:8px}
-.task-card{display:flex;justify-content:space-between;align-items:flex-start;padding:12px;border-radius:10px;background:rgba(0,0,0,0.03)}
-.checkbox{width:20px;height:20px;border:1px solid #aaa;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.checkbox.done{background:#111827;color:white}
-.task-title{font-weight:600}
-.task-dates{font-size:13px;color:#555}
-.important{color:#b91c1c;font-weight:800;margin-left:6px}
-.tag{padding:6px 8px;background:white;border-radius:8px;border:1px solid #ddd;font-size:12px}
-.controls-inline{display:flex;gap:6px}
-.checkbox-label{display:flex;align-items:center;gap:8px}
-
-
-
-@media (max-width:980px){
-  .grid{grid-template-columns:1fr}
-  .sidebar,.dev-panel{position:static;height:auto}
 }
