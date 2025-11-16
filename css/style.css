@@ -1,6 +1,7 @@
 /* =========================
-   STYLE.CSS (REVISI PENUH V3)
-   Perbaikan dari screenshot. CSS diperkuat untuk mengalahkan file lama.
+   STYLE.CSS (REVISI V5)
+   Perbaikan: Memberi gaya default ke .btn agar semua tombol (termasuk
+   yang dibuat oleh JS lama) terlihat benar.
    ========================= */
 
 /* === Root Variables (dari ai-solution) === */
@@ -189,6 +190,8 @@ a {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  position: relative; /* Perbaikan Z-Index */
+  z-index: 2; /* Perbaikan Z-Index */
 }
 
 /* Header lama disembunyikan, diganti navbar */
@@ -410,9 +413,9 @@ header { display: none; }
 }
 
 /* === Tombol & Input (Gaya ai-solution) === */
+/* INI ADALAH PERBAIKAN V5 */
 .btn {
   padding: 10px 15px;
-  border: none;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
@@ -422,18 +425,32 @@ header { display: none; }
   align-items: center;
   gap: 0.5rem;
   font-family: 'Space Grotesk', 'Inter', sans-serif;
+  
+  /* Gaya default baru (mirip .ghost) untuk menangkap tombol lama */
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
 }
 
 .btn.primary {
     background: var(--gradient) !important; /* Diperkuat */
     color: var(--background) !important; /* Diperkuat */
+    border: none !important; /* Pastikan tidak ada border */
 }
 .btn.primary:hover {
     transform: translateY(-2px);
     box-shadow: var(--glow-strong);
+    border: none !important;
+    color: var(--background) !important; /* Pastikan warna teks tetap */
 }
 
 .btn.ghost {
+    /* Gaya ini sekarang ada di .btn */
     background: transparent;
     color: var(--text-primary);
     border: 1px solid var(--border);
@@ -442,10 +459,13 @@ header { display: none; }
     border-color: var(--primary);
     color: var(--primary);
 }
+/* AKHIR PERBAIKAN V5 */
+
 
 /* Input (Gaya ai-solution) */
 input[type="text"],
 input[type="date"],
+input[type="number"],
 select,
 .input {
   background: var(--surface);
@@ -457,9 +477,20 @@ select,
   font-family: 'Space Grotesk', 'Inter', sans-serif;
   width: 100%;
 }
+/* Menghilangkan panah di input number */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 
 input[type="text"]:focus,
 input[type="date"]:focus,
+input[type="number"]:focus,
 select:focus,
 .input:focus {
   border-color: var(--primary);
@@ -491,7 +522,7 @@ select:focus,
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  height: 60%; /* Sesuaikan */
+  flex: 1; /* Mengisi penuh kolom */
 }
 
 .messages {
@@ -528,7 +559,6 @@ select:focus,
   margin-top: 8px;
 }
 
-/* PERBAIKAN: Input chat di-styling */
 .chat input[type="text"] {
   flex: 1;
   width: auto; /* override 100% */
@@ -549,7 +579,7 @@ select:focus,
 }
 
 /* === Halaman Task & Jadwal (Spesifik) === */
-.tasks-panel {
+.tasks-panel, .finance-panel, .productivity-panel {
     background: var(--surface);
     padding: 16px;
     border-radius: var(--radius);
@@ -599,6 +629,7 @@ select:focus,
     justify-content: center;
     cursor: pointer;
     color: var(--primary);
+    flex-shrink: 0; /* Agar checkbox tidak mengecil */
 }
 .checkbox.done {
     background: var(--primary);
@@ -755,4 +786,16 @@ select:focus,
   .main {
     order: 2;
   }
+}
+
+@media (max-width: 768px) {
+    .two-col {
+        grid-template-columns: 1fr;
+    }
+    .cards {
+        grid-template-columns: 1fr;
+    }
+    .jadwal-panel {
+        grid-template-columns: 1fr !important;
+    }
 }

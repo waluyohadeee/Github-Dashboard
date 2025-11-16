@@ -3,29 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dashboard Pelajar — Manajemen Keuangan</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Student Panel — Manajemen Keuangan</title>
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
 
+  <div class="web3-bg">
+      <div class="grid-lines"></div>
+      <div class="floating-shapes">
+          <div class="shape shape-1"></div>
+          <div class="shape shape-2"></div>
+      </div>
+  </div>
+  <div class="particles-container"></div>
+
+  <nav class="navbar">
+      <div class="nav-container">
+          <div class="nav-logo">
+              <div class="logo-glow">
+                  <i class="fas fa-graduation-cap"></i>
+              </div>
+              <span class="logo-text">Student<span class="logo-accent">PANEL</span></span>
+          </div>
+          
+          <div class="nav-actions">
+              <button class="btn primary" onclick="window.location.href='index.html'">
+                  <i class="fas fa-home"></i>
+                  Dashboard
+              </button>
+          </div>
+      </div>
+  </nav>
+
 <div class="container" id="app">
 
-<header>
-  <div>
-    <h1>Dashboard Pelajar</h1>
-    <div class="sub">Manajemen Keuangan • Chatbot hanya di dashboard utama</div>
-  </div>
-  <div class="sub" id="dev-status">Status: Ready</div>
-</header>
-
-<div class="grid" style="grid-template-columns: 260px 1fr;">
+<div class="grid">
 
   <aside class="sidebar">
     <div class="logo">
-      <div class="logo-mark">SP</div>
-      <div><div class="logo-title">Student Panel</div><div class="muted">Navigasi</div></div>
+      <div class="logo-box">SP</div>
+      <div><div class="logo-title">Student Panel</div><div class="muted small">Navigasi</div></div>
     </div>
 
     <div class="menu">
@@ -39,69 +60,53 @@
 
   <main class="finance-panel">
 
-    <div class="panel-header">
-      <div>
-        <div class="section-title">Manajemen Keuangan</div>
-        <div class="muted">Overview, riwayat, filter, dan chart.</div>
+    <section class="cards" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="card">
+        <div class="title">Total Saldo</div>
+        <div class="value" id="finance-summary-balance">Rp0</div>
       </div>
-    </div>
-
-    <section class="cards" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 16px;">
       <div class="card">
         <div class="title">Total Pemasukan</div>
-        <div class="value" id="overview-income">Rp0</div>
+        <div class="value" id="finance-summary-income" style="color: var(--primary);">Rp0</div>
       </div>
       <div class="card">
         <div class="title">Total Pengeluaran</div>
-        <div class="value" id="overview-expense">Rp0</div>
-      </div>
-      <div class="card">
-        <div class="title">Saldo Saat Ini</div>
-        <div class="value" id="overview-balance">Rp0</div>
+        <div class="value" id="finance-summary-expense" style="color: var(--accent);">Rp0</div>
       </div>
     </section>
 
-    <section class="two-col" style="margin-bottom: 16px;">
-      <div class="panel">
-        <div class="panel-head">
-          <div class="ph-title">Lalu Lintas Keuangan</div>
-        </div>
-        <div class="chart-container" style="height: 250px;">
-          <canvas id="finance-chart"></canvas>
-        </div>
+    <div class="panel add-form">
+      <div class="section-title">Tambah Transaksi Baru</div>
+      <div class="form-row">
+        <input id="tx-title" class="input" style="flex:1" placeholder="Judul (cth: Beli buku, Uang jajan)" />
+        <input id="tx-amount" type="number" class="input small" style="width: 150px;" placeholder="Jumlah (cth: 50000)" />
       </div>
-      
-      <div class="panel">
-        <div class="panel-head">
-          <div class="ph-title">Filter & Kontrol</div>
-        </div>
-        <div class="controls" style="display: flex; flex-direction: column; gap: 12px;">
-          <select id="filter-type" class="input">
-            <option value="all">Semua Transaksi</option>
-            <option value="Pemasukan">Pemasukan Saja</option>
-            <option value="Pengeluaran">Pengeluaran Saja</option>
-          </select>
-          <input id="filter-text" class="input" placeholder="Cari berdasarkan deskripsi...">
-          <button id="btn-clear-storage" class="btn">Hapus Semua Data Keuangan</button>
-        </div>
+      <div class="form-row">
+        <select id="tx-type" class="input small" style="width: 150px;">
+          <option value="expense">Pengeluaran</option>
+          <option value="income">Pemasukan</option>
+        </select>
+        <input id="tx-category" class="input small" style="flex:1" placeholder="Kategori (cth: Makanan, Transportasi, Gaji)" />
+        <button id="btn-add-tx" class="btn primary">Tambah</button>
       </div>
-    </section>
-
-    <section class="panel">
-        <div class="panel-head">
-          <div class="ph-title">Riwayat Transaksi</div>
-          <div class="muted small" id="finance-count">0 Transaksi</div>
-        </div>
-        <div id="finance-list-detailed" class="list" style="margin-top: 12px;">
+    </div>
+    
+    <div class="panel">
+        <div class="section-title">Riwayat Transaksi</div>
+        <div id="finance-list-full" class="list" style="margin-top: 1rem;">
             </div>
-        <div id="empty-hint" class="muted empty" style="display: none;">Belum ada transaksi.</div>
-    </section>
+    </div>
 
   </main>
 
 </div>
 </div>
 
-<script type="module" src="js/keuangan.js" defer></script>
+<script src="js/animations.js"></script>
+
+<script src="js/keuangan.js" defer></script>
+
+<script src="js/nav.js" defer></script>
+
 </body>
 </html>

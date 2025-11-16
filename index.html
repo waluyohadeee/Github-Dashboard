@@ -3,13 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Student Panel — Tanggungan Tugas</title>
-  
+  <title>Student Panel - AI-Powered Dashboard</title>
+
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-
 <body>
 
   <div class="web3-bg">
@@ -17,6 +16,8 @@
       <div class="floating-shapes">
           <div class="shape shape-1"></div>
           <div class="shape shape-2"></div>
+          <div class="shape shape-3"></div>
+          <div class="shape shape-4"></div>
       </div>
   </div>
   <div class="particles-container"></div>
@@ -31,119 +32,111 @@
           </div>
           
           <div class="nav-status">
-            Status: <strong id="dev-status">Ready</strong>
+            Status: <strong id="status">Ready</strong>
           </div>
 
           <div class="nav-actions">
-              <button class="btn primary" onclick="window.location.href='index.html'">
-                  <i class="fas fa-home"></i>
-                  Dashboard
+              <button class="btn primary" onclick="alert('AI Connected!')">
+                  <i class="fas fa-plug"></i>
+                  Connect AI
               </button>
           </div>
       </div>
   </nav>
 
-<div class="container" id="app">
+  <div class="container" id="app">
+    
+    <div class="grid">
+      <aside class="sidebar">
+        <div class="logo">
+          <div class="logo-box">SP</div>
+          <div>
+            <div class="logo-title">Student Panel</div>
+            <div class="muted small">Dashboard • Prototype</div>
+          </div>
+        </div>
 
-<div class="grid">
+        <div class="menu" role="tablist">
+          <button data-view="dashboard" class="active">Dashboard</button>
+          <button data-view="jadwal">Jadwal</button>
+          <button data-view="tasks">Tanggungan Tugas</button>
+          <button data-view="finance">Manajemen Keuangan</button>
+          <button data-view="productivity">Produktivitas</button>
+        </div>
 
-  <aside class="sidebar">
-    <div class="logo">
-      <div class="logo-box">SP</div>
-      <div><div class="logo-title">Student Panel</div><div class="muted small">Navigasi</div></div>
+        </aside>
+
+      <main class="main">
+        <section class="cards">
+          <div class="card">
+            <div class="title">Jadwal Hari Ini</div>
+            <div class="value" id="summary-schedule">0 kegiatan</div>
+          </div>
+          <div class="card">
+            <div class="title">Tanggungan Tugas</div>
+            <div class="value" id="summary-tasks">0 tugas</div>
+          </div>
+          <div class="card">
+            <div class="title">Saldo</div>
+            <div class="value" id="summary-balance">Rp0</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div class="ph-title">Ringkasan Produktivitas</div>
+            <div class="muted small">Skor dihitung dari tugas selesai & check-in</div>
+          </div>
+          <div class="productivity-row">
+            <div class="productivity-val" id="summary-productivity">0%</div>
+            <div class="muted small">Skor harian.</div>
+          </div>
+        </section>
+
+        <section class="two-col">
+          <div class="panel">
+            <div class="panel-head">
+              <div class="ph-title">Manajemen Keuangan — Terbaru</div>
+              <button class="btn ghost" id="btn-add-expense">Tambah Pengeluaran</button>
+            </div>
+            <div class="list" id="finance-list"></div>
+            <div class="muted small" style="margin-top:8px">Kamu bisa menambahkan via chat juga.</div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div class="ph-title">Tugas Mendatang</div>
+              <div class="muted small" id="task-count">0</div>
+            </div>
+            <div class="list" id="tasks-list"></div>
+            <div class="task-add">
+              <input id="new-task-input" type="text" placeholder="Contoh: Kerjakan PR matematika" />
+              <div class="task-add-btns">
+                <button class="btn primary" id="btn-add-task">Tambahkan Tugas</button>
+                <button class="btn ghost" id="btn-complete-sim">Tandai Satu Selesai (demo)</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="rightcol">
+        <div class="chat">
+          <div class="panel-head">
+            <div class="ph-title">AI Assistant</div>    
+          </div>
+          <div class="messages" id="chat-messages"></div>
+          <div class="input-row">
+            <input id="chat-input" type="text" placeholder='Contoh: "saya membeli kuota 50rb"' />
+            <button class="send" id="chat-send">Kirim</button>
+          </div>
+        </div>
+      </aside>
     </div>
+  </div>
 
-    <div class="menu">
-      <button data-view="dashboard">Dashboard</button>
-      <button data-view="jadwal">Jadwal</button>
-      <button data-view="tasks" class="active">Tanggungan Tugas</button>
-      <button data-view="finance">Manajemen Keuangan</button>
-      <button data-view="productivity">Produktivitas</button>
-    </div>
-  </aside>
-
-  <main class="tasks-panel">
-
-    <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-      <div>
-        <div class="section-title">Tanggungan Tugas</div>
-        <div class="muted">Tambah, edit, atur prioritas, tandai selesai, sortir, filter.</div>
-      </div>
-      <div class="muted" id="task-summary">0 tugas</div>
-    </div>
-
-    <div class="add-form">
-      <div class="form-row">
-        <input id="task-title" class="input" style="flex:1" placeholder="Judul tugas" />
-        <select id="task-type" class="input small" style="width: 150px;">
-          <option value="study">Study</option>
-          <option value="assignment">Assignment</option>
-          <option value="project">Project</option>
-          <option value="personal">Personal</option>
-        </select>
-        <label class="checkbox-label"><input id="task-important" type="checkbox" /> Penting</label>
-      </div>
-      <div class="form-row">
-        <input id="task-start" type="date" class="input small" style="width: 150px;" />
-        <input id="task-due" type="date" class="input small" style="width: 150px;" />
-        <select id="task-priority" class="input small" style="width: 120px;">
-          <option value="low">Low</option>
-          <option value="medium" selected>Medium</option>
-          <option value="high">High</option>
-        </select>
-        <button id="btn-add-task" class="btn primary">Tambah</button>
-      </div>
-    </div>
-
-    <div class="controls">
-      <input id="filter-text" class="input small" placeholder="Cari..." style="width: 200px;" />
-      <select id="filter-type" class="input small" style="width: 150px;">
-        <option value="">Semua tipe</option>
-        <option value="study">Study</option>
-        <option value="assignment">Assignment</option>
-        <option value="project">Project</option>
-        <option value="personal">Personal</option>
-      </select>
-      <label class="checkbox-label"><input id="filter-important" type="checkbox" /> Penting saja</label>
-
-      <select id="sort-by" class="input small" style="width: 150px;">
-        <option value="due_asc">Deadline ↑</option>
-        <option value="due_desc">Deadline ↓</option>
-        <option value="start_asc">Mulai ↑</option>
-        <option value="start_desc">Mulai ↓</option>
-        <option value="priority_desc">Prioritas</option>
-        <option value="type_asc">Tipe A→Z</option>
-      </select>
-
-      <button id="btn-clear-filters" class="btn ghost">Reset</button>
-    </div>
-
-    <div id="tasks-list" class="tasks-list"></div>
-    <div id="empty-hint" class="muted empty">Belum ada tugas.</div>
-
-  </main>
-
-</div>
-</div>
-
-<script src="js/animations.js"></script>
-<script src="js/task.js" defer></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.menu button[data-view]').forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        const view = button.getAttribute('data-view');
-        
-        if (view === 'dashboard') {
-          window.location.href = 'index.html';
-        } else if (view === 'jadwal') {
-          window.location.href = 'jadwal.html';
-        }
-        // Tambahkan navigasi lain jika ada halamannya
-      });
-    });
-  });
-</script>
+  <script type="module" src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/nav.js" defer></script>
 </body>
 </html>
